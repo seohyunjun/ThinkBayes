@@ -1,0 +1,2 @@
+# ThinkBayes
+Book - ThinkBayes Ex
