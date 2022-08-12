@@ -3,7 +3,6 @@
 ### 
 
 # 제너럴 소셜 서베이의 직업 데이터 사용
-
 import pandas as pd
 import os
 os.chdir("/Users/hyunjunseo/Desktop/STUDY/ThinkBayes")
@@ -48,6 +47,74 @@ prob(selected)
 def conditional(proposition, given):
     return prob(proposition[given])
 
-conditional(liberal, given=female) # 진보성향 중 여성일 경우 0.27
+conditional(liberal, given=female) # 여성 중 은행원 경우 0.27
  
  
+# 조건부확률은 교환이 가능하지 않다
+conditional(female, given=bank) # 0.77
+conditional(bank, given=female) # 0.021 
+
+## 조건과 논리곱
+conditional(female, given=liberal&democrat) # 0.57 진보성형+민주당원 중 여성 
+conditional(liberal&democrat, given=bank) # 0.10 은행원 중 진보성형+민주당원
+
+## 확률 법칙
+# 1. 논리 곱을 사용한 조건부확률 계산
+# 2. 조건부확률을 사용한 논리곱 계산
+# 3. conditional(A,B)를 사용한 conditional(B,A) 계산
+
+# P(A)는 명제 A에 대한 확률이다
+# P(A and B)는 A와 B의 논리곱의 확률이다. 즉 A와 B 모두 참일 확률이다.
+# P(A|B)는 B가 주어졌을 때 A가 참일 확률이다. A와 B 사이 세로선은 'given'으로 읽는다.
+
+## Theorem 1 
+# Q1. 은행가 중 몇 %나 여성일까? 
+# case 1
+female[bank].mean() # 0.77
+# case 2
+conditional(female, given=bank) # 0.77
+# case 3 응답자 중 여성 은행원 비율을 구하고, 응답자 중 은행원의 비율을 구한다.
+prob(female & bank) / prob(bank) # 0.77
+
+## Theorem 2
+# P(A and B) = P(B)*P(A|B)
+prob(liberal & democrat) # 0.14
+prob(democrat) * conditional(liberal, given=democrat)
+
+## Theorem 3
+# P(A and B) = P(B and A)
+## ** Con : P(B)P(A|B)=P(A)P(B|A)
+conditional(liberal, given=bank)
+prob(liberal)*conditional(bank, given=liberal)/prob(bank)
+
+## 전체확률의 법칙
+# P(A) = P(B_1 and A) + P(B_2 and A)
+
+# 상호 배제, 이는 전체 B 중 하나만 참인 경우다.
+# 전체 포괄, 이는 전체 B 중 하나는 반드시 참이다.
+
+
+male = (gss['sex']==1) 
+prob(bank) # 0.014 
+prob(male&bank) + prob(female&bank) # 0.014 
+prob(bank) == prob(male&bank) + prob(female&bank) # True
+
+## con : P(A) = P(B_1)P(A|B_1) + P(B_2)P(A|B_2) 
+
+prob(bank) == prob(male).mean()*conditional(bank, given=male) + prob(female).mean()*conditional(bank, given=female) # True
+
+# P(A) = Sum_i{P(B_i)P(A|B_i)}
+B = gss['polviews']
+B.value_counts().sort_index()
+# 4 = 정치 성향 중도
+i = 4 
+prob(B==i) * conditional(bank, B==i)
+
+prob(B) * conditional(bank, B) == sum(prob(B==i) * conditional(bank, B==i) for i in range(1,8)) # True
+
+
+prob(female&bank)
+
+
+conditional(liberal, given=democrat)
+conditional(democrat, given=liberal)
