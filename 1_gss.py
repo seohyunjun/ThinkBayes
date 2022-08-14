@@ -17,7 +17,7 @@ gss.columns # ['year', 'age', 'sex', 'polviews', 'partyid', 'indus10']
 ## "indus10" == 은행원
 banker = gss[gss['indus10']==6870]
 
-print(f'은행원의 수 : {len(banker)}') # 728
+print(f'은행원의 수 : {len(banker   )}') # 728
 print(f'은행원의 비율 : {len(banker)/len(gss)*100}%') # 1.47%
 
 

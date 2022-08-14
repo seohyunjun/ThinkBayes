@@ -11,3 +11,5 @@ Book - ThinkBayes Ex
 
 ### 이것을 검증하기 위해 제너럴 소셜 설문조사를 통해 확률을 구해본다.
 
+> Bayes Theorem
+- 1_BayesTheorem.py : 베이즈 이론, 주사위 문제, 몬티 홀 문제 
