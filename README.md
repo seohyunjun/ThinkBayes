@@ -1,3 +1,4 @@
+<img src="https://greenteapress.com/wp/wp-content/uploads/2021/04/think_bayes_2e_cover_medium.jpg">
 # ThinkBayes
 Book - ThinkBayes Ex
 
